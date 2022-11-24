@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Data.Interfaces
 {
-    public interface IMovieRepository : IRepository<Movie>
+    public interface IRepository<TEntity> where TEntity : BaseEntity
     {
-        Task AddToUserWatchlistAsync(int movieId, int userId);
+        Task<IEnumerable<TEntity>> GetAllAsync();
     }
 }

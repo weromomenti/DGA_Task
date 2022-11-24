@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Data.Interfaces
 {
-    public interface IMovieRepository : IRepository<Movie>
+    public interface IUserRepository : IRepository<User>
     {
-        Task AddToUserWatchlistAsync(int movieId, int userId);
+        Task MarkMovieWatchedAsync(int movieId);
     }
 }
