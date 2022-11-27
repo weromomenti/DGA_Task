@@ -29,7 +29,7 @@ namespace Data.Repositories
 
         public async Task<Movie> GetByIdAsync(int id)
         {
-            return await appDbContext.Movies.Include(m => m.Users).FirstOrDefaultAsync(m => m.Id == id);
+            return await appDbContext.Movies.Include(m => m.WatchListUsers).FirstOrDefaultAsync(m => m.Id == id);
         }
     }
 }

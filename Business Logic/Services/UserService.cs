@@ -31,11 +31,23 @@ namespace Business_Logic.Services
         {
             var user = await unitOfWork.UserRepository.GetByIdAsync(userId);
 
-            return mapper.Map<IEnumerable<MovieModel>>(user.Movies);
+            return mapper.Map<IEnumerable<MovieModel>>(user.WatchList);
         }
-        public Task MarkMovieAsWatchedAsync(int movieId, int userId)
+        public async Task MarkMovieAsWatchedAsync(int movieId, int userId)
         {
-            throw new NotImplementedException();
+            var user = await unitOfWork.UserRepository.GetByIdAsync(userId);
+            var movie = await unitOfWork.MovieRepository.GetByIdAsync(movieId);
+
+            if (movie == null || user == null)
+            {
+                throw new Exception();
+            }
+            if (user.WatchList.FirstOrDefault(m => m.Id == movieId) == null)
+            {
+                throw new Exception();
+            }
+            user.WatchedMovies.Add(movie);
+            await unitOfWork.SaveChangesAsync();
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Data.Entities
 {
     public class Movie : BaseEntity
     {
-        public ICollection<User> Users { get; set; }
+        public ICollection<User> WatchListUsers { get; set; }
+        public ICollection<User> ToWatchUsers { get; set; }
     }
 }

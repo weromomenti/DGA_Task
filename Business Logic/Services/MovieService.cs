@@ -47,7 +47,7 @@ namespace Business_Logic.Services
             {
                 throw new Exception();
             }
-            user.Movies.Add(movie);
+            user.WatchList.Add(movie);
             await unitOfWork.SaveChangesAsync();
         }
 

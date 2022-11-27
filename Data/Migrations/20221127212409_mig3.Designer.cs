@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221127075013_newFields")]
-    partial class newFields
+    [Migration("20221127212409_mig3")]
+    partial class mig3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,7 +32,6 @@ namespace Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -61,7 +60,6 @@ namespace Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -83,30 +81,60 @@ namespace Data.Migrations
 
             modelBuilder.Entity("MovieUser", b =>
                 {
-                    b.Property<int>("UsersId")
+                    b.Property<int>("WatchListId")
                         .HasColumnType("int");
 
-                    b.Property<int>("WatchlistId")
+                    b.Property<int>("WatchListUsersId")
                         .HasColumnType("int");
 
-                    b.HasKey("UsersId", "WatchlistId");
+                    b.HasKey("WatchListId", "WatchListUsersId");
 
-                    b.HasIndex("WatchlistId");
+                    b.HasIndex("WatchListUsersId");
 
                     b.ToTable("MovieUser");
                 });
 
+            modelBuilder.Entity("MovieUser1", b =>
+                {
+                    b.Property<int>("ToWatchId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ToWatchUsersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ToWatchId", "ToWatchUsersId");
+
+                    b.HasIndex("ToWatchUsersId");
+
+                    b.ToTable("MovieUser1");
+                });
+
             modelBuilder.Entity("MovieUser", b =>
                 {
-                    b.HasOne("Data.Entities.User", null)
+                    b.HasOne("Data.Entities.Movie", null)
                         .WithMany()
-                        .HasForeignKey("UsersId")
+                        .HasForeignKey("WatchListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Data.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("WatchListUsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MovieUser1", b =>
+                {
                     b.HasOne("Data.Entities.Movie", null)
                         .WithMany()
-                        .HasForeignKey("WatchlistId")
+                        .HasForeignKey("ToWatchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("ToWatchUsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

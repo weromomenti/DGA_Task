@@ -79,30 +79,60 @@ namespace Data.Migrations
 
             modelBuilder.Entity("MovieUser", b =>
                 {
-                    b.Property<int>("MoviesId")
+                    b.Property<int>("WatchListId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsersId")
+                    b.Property<int>("WatchListUsersId")
                         .HasColumnType("int");
 
-                    b.HasKey("MoviesId", "UsersId");
+                    b.HasKey("WatchListId", "WatchListUsersId");
 
-                    b.HasIndex("UsersId");
+                    b.HasIndex("WatchListUsersId");
 
                     b.ToTable("MovieUser");
+                });
+
+            modelBuilder.Entity("MovieUser1", b =>
+                {
+                    b.Property<int>("ToWatchUsersId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WatchedMoviesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ToWatchUsersId", "WatchedMoviesId");
+
+                    b.HasIndex("WatchedMoviesId");
+
+                    b.ToTable("MovieUser1");
                 });
 
             modelBuilder.Entity("MovieUser", b =>
                 {
                     b.HasOne("Data.Entities.Movie", null)
                         .WithMany()
-                        .HasForeignKey("MoviesId")
+                        .HasForeignKey("WatchListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Entities.User", null)
                         .WithMany()
-                        .HasForeignKey("UsersId")
+                        .HasForeignKey("WatchListUsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MovieUser1", b =>
+                {
+                    b.HasOne("Data.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("ToWatchUsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Entities.Movie", null)
+                        .WithMany()
+                        .HasForeignKey("WatchedMoviesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

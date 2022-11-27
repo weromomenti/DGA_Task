@@ -19,12 +19,16 @@ namespace Data.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Movie>().HasMany(m => m.WatchListUsers).WithMany(u => u.WatchList);
+            modelBuilder.Entity<Movie>().HasMany(m => m.ToWatchUsers).WithMany(u => u.WatchedMovies);
+
             modelBuilder.Entity<Movie>().HasData(
                 new Movie { Id = 1, Name = "The Lord of the Rigns" },
                 new Movie { Id = 2, Name = "The Hobiit" });
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Name = "User 1", Movies = new List<Movie>() },
-                new User { Id = 2, Name = "User 2", Movies = new List<Movie>() });
+                new User { Id = 1, Name = "User 1", WatchList = new List<Movie>(), WatchedMovies = new List<Movie>() },
+                new User { Id = 2, Name = "User 2", WatchList = new List<Movie>(), WatchedMovies = new List<Movie>() });
         }
     }
 }
