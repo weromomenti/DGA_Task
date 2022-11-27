@@ -8,5 +8,6 @@ namespace Data.Entities
 {
     public class Movie : BaseEntity
     {
+        public ICollection<User> Users { get; set; }
     }
 }

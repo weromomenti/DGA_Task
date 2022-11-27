@@ -8,6 +8,6 @@ namespace Data.Entities
 {
     public class User : BaseEntity
     {
-        public List<Movie> Watchlist { get; set; }
+        public ICollection<Movie> Movies { get; set; }
     }
 }

@@ -9,6 +9,5 @@ namespace Data.Interfaces
 {
     public interface IMovieRepository : IRepository<Movie>
     {
-        Task AddToUserWatchlistAsync(int movieId, int userId);
     }
 }

@@ -27,7 +27,12 @@ namespace Business_Logic.Services
 
             return mapper.Map<IEnumerable<UserModel>>(users);
         }
+        public async Task<IEnumerable<MovieModel>> GetUserWatchlistAsync(int userId)
+        {
+            var user = await unitOfWork.UserRepository.GetByIdAsync(userId);
 
+            return mapper.Map<IEnumerable<MovieModel>>(user.Movies);
+        }
         public Task MarkMovieAsWatchedAsync(int movieId, int userId)
         {
             throw new NotImplementedException();

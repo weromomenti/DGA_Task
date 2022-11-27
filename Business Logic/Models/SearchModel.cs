@@ -8,6 +8,6 @@ namespace Business_Logic.Models
 {
     public class SearchModel
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
     }
 }

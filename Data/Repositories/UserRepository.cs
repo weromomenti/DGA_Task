@@ -22,9 +22,9 @@ namespace Data.Repositories
         {
             return await appDbContext.Users.ToListAsync();
         }
-        public Task MarkMovieWatchedAsync(int movieId)
+        public async Task<User> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await appDbContext.Users.Include(u => u.Movies).FirstOrDefaultAsync(u => u.Id == id);
         }
     }
 }

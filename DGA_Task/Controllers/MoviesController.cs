@@ -19,7 +19,7 @@ namespace DGA_Task.Controllers
             this.movieService = movieService;
         }
         [HttpGet]
-        public async Task<ActionResult<MovieModel>> GetMoviesAsync([FromQuery] SearchModel searchModel)
+        public async Task<ActionResult<IEnumerable<MovieModel>>> GetMoviesAsync([FromQuery] SearchModel searchModel)
         {
             var movies = await movieService.GetByFilterAsync(searchModel);
 

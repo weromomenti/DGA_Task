@@ -9,6 +9,7 @@ namespace Business_Logic.Interfaces
 {
     public interface IUserService : ICrud<UserModel>
     {
+        Task<IEnumerable<MovieModel>> GetUserWatchlistAsync(int userId);
         Task MarkMovieAsWatchedAsync(int movieId, int userId);
     }
 }

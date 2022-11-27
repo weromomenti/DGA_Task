@@ -31,13 +31,24 @@ namespace Business_Logic.Services
         public async Task<IEnumerable<MovieModel>> GetByFilterAsync(SearchModel searchModel)
         {
             var movies = await unitOfWork.MovieRepository.GetAllAsync();
-            movies = movies.Where(m => m.Name.ToLower().Contains(searchModel.Name.ToLower()));
+            if (searchModel.Name != null && searchModel.Name != String.Empty)
+            {
+                movies = movies.Where(m => m.Name.ToLower().Contains(searchModel.Name.ToLower()));
+            }
 
             return mapper.Map<IEnumerable<MovieModel>>(movies);
         }
         public async Task AddMovieToWatchlistAsync(int movieId, int userId)
         {
-            await unitOfWork.MovieRepository.AddToUserWatchlistAsync(movieId, userId);
+            var user = await unitOfWork.UserRepository.GetByIdAsync(userId);
+            var movie = await unitOfWork.MovieRepository.GetByIdAsync(movieId);
+
+            if (user == null || movie == null)
+            {
+                throw new Exception();
+            }
+            user.Movies.Add(movie);
+            await unitOfWork.SaveChangesAsync();
         }
 
     }
